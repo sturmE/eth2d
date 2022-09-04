@@ -27,6 +27,7 @@ services:
       - LOG_LEVEL=${LOG_LEVEL}
     volumes:
       - geth-eth1-data:/var/lib/goethereum
+      - geth-eth1-ancient-data:/var/lib/goethereum/ancient
       - /etc/localtime:/etc/localtime:ro
       - jwtsecret:/var/lib/goethereum/ee-secret
     ports:
@@ -49,6 +50,8 @@ services:
       - web3,eth,net
       - --datadir
       - /var/lib/goethereum
+      - --datadir.ancient 
+      - /var/lib/goethereum/ancient
       - --port
       - ${EL_P2P_PORT:-30303}
       - --http.port
@@ -87,4 +90,15 @@ services:
     command: /bin/sh
 volumes:
   geth-eth1-data:
+    driver: local 
+    driver_opts:
+      o: bind 
+      type: none 
+      device: ${GETH_DATA_DIR}
+  geth-eth1-ancient-data:
+    driver: local 
+    driver_opts:
+      o: bind 
+      type: none 
+      device: ${GETH_ANCIENT_DATA_DIR}
   jwtsecret:

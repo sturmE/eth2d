@@ -2,5 +2,5 @@ version: "3.4"
 
 networks:
   default:
-    name: traefik_default
+    name: rocketpool_mainnet_net
     external: true
